@@ -1,4 +1,4 @@
-#+title: VSD 
+#+title: VSD OPENLANE WORKSHOP
 
 #+options: toc: 4
 
