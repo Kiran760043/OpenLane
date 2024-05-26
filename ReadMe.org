@@ -30,7 +30,7 @@ Openlane is collaboration software that includes multiple open-source tools to a
 For each design step in the ASIC design flow, an equivalent open-source tool is utilized to accomplish the task. The open-source tool list for each design step is as follows according to [[https://www.semanticscholar.org/paper/Building-OpenLANE%3A-A-130nm-OpenROAD-based-Tapeout-%3A-Shalan-Edwards/512e49a704bb9f461a7ee12edd0639b29f8a4976][Paper]]:
 
 | Desing Step         | EDA Tool                  |
-| ------------------- | ------------------------- |
+|---------------------+---------------------------|
 | Logic Synthesis     | Yosys and ABC             |
 | DFT Scan Insertion  | Fault                     |
 | DFT ATPG            | Fault                     |
