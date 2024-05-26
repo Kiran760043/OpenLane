@@ -46,9 +46,9 @@ For each design step in the ASIC design flow, an equivalent open-source tool is 
 | GDS Streaming Out   | Magic                     |
 
 
-From Figure 1, the OpenLane tool requires two catergories of files: 
+From Figure 1, the OpenLane tool requires two categories of files: 
 1. Design Files: These are the RTL files that are written by an RTL design engineer.
-2. PDKs: Process Design Kit (PDK) is a set of files used to model a fabrication process. Generally, the PDK files are degined by a foundary with a certain technology.
+2. PDKs: A Process Design Kit (PDK) is a set of files used to model a fabrication process. Generally, the PDK files are defined by a foundry with a certain technology.
 
 ** Process Design Kit (PDK)
 The OpenLane tools uses PDKs from SkyWater 130nm process. The complete documentation for SkyWater SKY130 PDK can be found [[https://skywater-pdk.readthedocs.io/en/main/index.html][here]].
@@ -59,7 +59,7 @@ The nomenclature used to identify SKY130 PDK is as follows:
 
 - Process name: is the name of the process technology and is always "sky130".
 
-- Library source abbreviation: specifies the foundry source of the library. The table below shows the list of the library sources:
+- Library source abbreviation specifies the library's foundry source. The table below shows the list of the library sources:
 | Library source            | Library source abbreviation |
 |---------------------------+-----------------------------|
 | SkyWater                  | fd                          |
@@ -72,20 +72,20 @@ The nomenclature used to identify SKY130 PDK is as follows:
   | Primitive cell                 | pr                        |
   | Digital Standard cell          | sc                        |
   | Build Space (flash, SRAM, etc) | bd                        |
-  | IO and Preiphery               | io                        |
+  | IO and Peripheral              | io                        |
   | Miscellaneous                  | xx                        |
   
-- Library name: is a the representation of the type of content found in the library. 
+- Library name: is the representation of the type of content found in the library. 
 
 **  Digital Standard Cell 
 
-- sky130_fd_sc_hd: SKY130 High Density Digital Cells
-- sky130_fd_sc_hdll: SKY130 High Density Low Leakage Digital Standard Cells
-- sky130_fd_sc_hs: SKY130 High Speed Digital Standard Cells
-- sky130_fd_sc_ls: SKY130 Low Speed Digital Standard Cells
+- sky130_fd_sc_hd: SKY130 High-Density Digital Cells
+- sky130_fd_sc_hdll: SKY130 High-Density Low Leakage Digital Standard Cells
+- sky130_fd_sc_hs: SKY130 High-Speed Digital Standard Cells
+- sky130_fd_sc_ls: SKY130 Low-Speed Digital Standard Cells
 - sky130_fd_sc_ms: SKY130 Medium Speed Digital Standard Cells
 
-From the name it can be seen that all the standard cells libraries are provided by SkyWater.
+From the name, it can be seen that all the standard cell libraries are provided by SkyWater.
 
 ** Standard Cell Libraries
 Digital Standard Cells can found in a folder called "~/tools/openlane_working_dir/pdks/skywater-pdk/libraries/". Among the available standard cells let us look at a high density two input AND gate in the folder "sky130_fc_sc_hd/latest/cells".
@@ -97,7 +97,7 @@ Digital Standard Cells can found in a folder called "~/tools/openlane_working_di
 [[./resources/VSD_Day1_and2.png]]
 
 #+name: source code
-#+caption: Verilog Behavioral code for two input AND Gate
+#+caption: Verilog Behavioral code for two inputs AND Gate
 
 #+begin_src verilog
 /*
@@ -185,7 +185,7 @@ endmodule
 [[./resources/VSD_Day1_openlane.png]]
 
 
-Picorv32a is simple risc-v processor core present in the "design" dicrectory. Before synthesizing the design prep the design so that it links to all the tech file and lib files for the design to be synthesized.
+Picorv32a is a simple risc-v processor core present in the "design" directory. Before synthesizing the design prep the design so that it links to all the tech file and lib files for the design to be synthesized.
 2. Execute "prep -design picorv32a".
 [[./resources/VSD_Day1_prep.png]]3. Run synthesis by executing "run_synthesis"
 [[./resources/VSD_Day1_syn.png]]
