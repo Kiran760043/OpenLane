@@ -6,7 +6,7 @@
 #+filetags: CoureWork
 #+options: toc: 4
 
-* Table pf Contents :toc:
+* Table of Contents :toc:
 - [[#vsd-day-1][VSD DAY 1]]
   - [[#openlane][OpenLane]]
   - [[#process-design-kit-pdk][Process Design Kit (PDK)]]
