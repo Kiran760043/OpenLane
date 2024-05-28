@@ -36,7 +36,7 @@ Openlane is collaboration software the includes multiple opensource tools to aut
 #+name: OpenLane Flow
 #+caption: Figure 1: OpenLan Flow
 #+attr_html: : width 600px
-[[~/OrgFiles/orgRoam/resources/VSD_Day1_openLane_flow.png]]
+[[./resources/VSD_Day1_openLane_flow.png]]
 
 
 For each design step in the ASIC desing flow an equivalent open source tool is utilized to accomplish the task. The open source tool list for each design step is as follows according to [[https://www.semanticscholar.org/paper/Building-OpenLANE%3A-A-130nm-OpenROAD-based-Tapeout-%3A-Shalan-Edwards/512e49a704bb9f461a7ee12edd0639b29f8a4976][Paper]]:
