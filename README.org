@@ -667,7 +667,7 @@ tap_decap_or
 #+end_src
 
 
-- To run placement, and see the design sky130_vsdinv being used.
+- Run placement, and see the design sky130_vsdinv being used.
 
 [[./resources/openlane_resources/placement7.png]]
 
