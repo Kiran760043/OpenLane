@@ -52,16 +52,10 @@ Openlane is collaboration software the includes multiple opensource tools to aut
 #+name: OpenLane Flow
 #+caption: Figure 1: OpenLan Flow
 #+attr_html: : width 600px
-#+BEGIN: clocktable :scope subtree :maxlevel 2
-#+CAPTION: Clock summary at [2024-05-30 Thu 20:35]
-| Headline     | Time   |
-|--------------+--------|
-| *Total time* | *0:00* |
-#+END:
 
 [[./resources/openlane_resources/VSD_Day1_openLane_flow.png]]
 
-For each design step in the ASIC desing flow an equivalent open source tool is utilized to accomplish the task. The open source tool list for each design step is as follows according to [[https://www.semanticscholar.org/paper/Building-OpenLANE%3A-A-130nm-OpenROAD-based-Tapeout-%3A-Shalan-Edwards/512e49a704bb9f461a7ee12edd0639b29f8a4976][Paper]]:
+For each design step in the ASIC design flow an equivalent open source tool is utilized to accomplish the task. The open-source tool list for each design step is as follows according to [[https://www.semanticscholar.org/paper/Building-OpenLANE%3A-A-130nm-OpenROAD-based-Tapeout-%3A-Shalan-Edwards/512e49a704bb9f461a7ee12edd0639b29f8a4976][Paper]]:
 
 | Desing Step         | EDA Tool                  |
 | ------------------- | ------------------------- |
@@ -80,14 +74,14 @@ For each design step in the ASIC desing flow an equivalent open source tool is u
 | GDS Streaming Out   | Magic                     |
 
 
-From Figure 1, the OpenLane tool requires two catergories of files: 
-1. Design Files: These are the RTL files that are written by an RTL design engineer.
-2. PDKs: Process Design Kit (PDK) is a set of files used to model a fabrication process. Generally, the PDK files are degined by a foundary with a certain technology.
+From Figure 1, the OpenLane tool requires two categories of files: 
+1. Design Files: These are the RTL files that an RTL design engineer writes.
+2. PDKs: A Process Design Kit (PDK) is a set of files used to model a fabrication process. Generally, the PDK files are designed by a foundry with a certain technology.
 
 ** Process Design Kit (PDK)
-The OpenLane tools uses PDKs from SkyWater 130nm process. The complete documentation for SkyWater SKY130 PDK can be found [[https://skywater-pdk.readthedocs.io/en/main/index.html][here]].
+The OpenLane tools use PDKs from the SkyWater 130nm process. The complete documentation for SkyWater SKY130 PDK can be found [[https://skywater-pdk.readthedocs.io/en/main/index.html][here]].
 
-The nomenclature used to identify SKY130 PDK is as follows:
+The terminology used to identify SKY130 PDK is as follows:
 
 <process name>_<library_source_abbreviation>_<library_type_abbreviation>[_library_name]
 
@@ -106,23 +100,23 @@ The nomenclature used to identify SKY130 PDK is as follows:
   | Primitive cell                 | pr                        |
   | Digital Standard cell          | sc                        |
   | Build Space (flash, SRAM, etc) | bd                        |
-  | IO and Preiphery               | io                        |
+  | IO and Periphery               | io                        |
   | Miscellaneous                  | xx                        |
   
-- Library name: is a the representation of the type of content found in the library. 
+- Library name: is a representation of the type of content found in the library. 
 
 **  Digital Standard Cell 
 
-- sky130_fd_sc_hd: SKY130 High Density Digital Cells
-- sky130_fd_sc_hdll: SKY130 High Density Low Leakage Digital Standard Cells
-- sky130_fd_sc_hs: SKY130 High Speed Digital Standard Cells
-- sky130_fd_sc_ls: SKY130 Low Speed Digital Standard Cells
+- sky130_fd_sc_hd: SKY130 High-Density Digital Cells
+- sky130_fd_sc_hdll: SKY130 High-Density Low Leakage Digital Standard Cells
+- sky130_fd_sc_hs: SKY130 High-Speed Digital Standard Cells
+- sky130_fd_sc_ls: SKY130 Low-Speed Digital Standard Cells
 - sky130_fd_sc_ms: SKY130 Medium Speed Digital Standard Cells
 
-From the name it can be seen that all the standard cells libraries are provided by SkyWater.
+From the name it can be seen that all the standard cell libraries are provided by SkyWater.
 
 ** Standard Cell Libraries
-Digital Standard Cells can found in a folder called "~/tools/openlane_working_dir/pdks/skywater-pdk/libraries/". Among the available standard cells let us look at a high density two input AND gate in the folder "sky130_fc_sc_hd/latest/cells".
+Digital Standard Cells can be found in a folder called "~/tools/openlane_working_dir/pdks/skywater-pdk/libraries/". Among the available standard cells let us look at a high-density two input AND gate in the folder "sky130_fc_sc_hd/latest/cells".
 
 #+name: AND Gate Symbol
 #+caption: Figure 2: AND Gate Cell Symbol
@@ -131,7 +125,7 @@ Digital Standard Cells can found in a folder called "~/tools/openlane_working_di
 [[./resources/openlane_resources/VSD_Day1_and2.png]]
 
 #+name: source code
-#+caption: Verilog Behavioral code for two input AND Gate
+#+caption: Verilog Behavioral code for two inputs AND Gate
 
 #+begin_src verilog
 /*
@@ -219,7 +213,7 @@ endmodule
 [[./resources/openlane_resources/VSD_Day1_openlane.png]]
 
 
-Picorv32a is simple risc-v processor core present in the "design" dicrectory. Before synthesizing the design prep the design so that it links to all the tech file and lib files for the design to be synthesized.
+Picorv32a is a simple risc-v processor core present in the "design" directory. Before synthesizing the design prep the design so that it links to all the tech files and lib files for the design to be synthesized.
 2. Execute "prep -design picorv32a".
 
 
@@ -231,17 +225,17 @@ The total number of cells is 14876 and the number of D-FF utilized is 1613, ther
 
 * VSD DAY 2
 
-The goal of day 2 is understand floorplane.
+The goal of day 2 is to understand floorplan.
 
 ** Utilization Factor and Aspect Ratio
 
-Setting the width and height of the die is the first and important step to understand how much cells can fit in the die. Gate level netlist provides the necessary information regarding the connectivity of the design. Dimensions of the chips depends on the dimensions of the logic gates. Each gate is defined with length and breadth of the gates. 
+Setting the width and height of the die is the first and most important step to understanding how many cells can fit in the die. Gate level netlist provides the necessary information regarding the connectivity of the design. The dimensions of the chips depend on the dimensions of the logic gates. Each gate is defined by the length and breadth of the gates. 
 
-Utilization factor (UF) = Area occupie dby netlist / Total area of the core.
+Utilization factor (UF) = Area occupied by netlist / Total area of the core.
 
-Apect Ratio (AR) =  height / width.
+Aspect Ratio (AR) =  height/width.
 
-Suppose height and width of a logic cell is 1 unit each, the UF and AR is 1 sq unit or 100% utlization factor. Generally, 100% utliziation factor is not advisible as there is should be some space left for routing.
+Suppose the height and width of a logic cell are 1 unit each, and the UF and AR are 1 sq unit or 100% utilization factor. Generally, 100% utilization factor is not advisable as there should be some space left for routing.
 
 #+attr_html: : width 600px
 [[./resources/openlane_resources/die_core.png]]
@@ -253,10 +247,10 @@ Suppose height and width of a logic cell is 1 unit each, the UF and AR is 1 sq u
 
 ** Pre-Placed Cells
 
-Cells that are used multiples are implemented once and can be reduced. Some of the cells that can be implemented once and reused multiple times are memory, clock-gating cell, comparator, etc. These cells must be placed in such a way it can be used multiple times by the design and are called pre-laced cells. Placement of these cells will be fixed and will be done before placing the logic. PnR tool will not optimize the placement of these cells.
+Cells that are used multiples are implemented once and can be reduced. Some of the cells that can be implemented once and reused multiple times are memory, clock-gating cells, comparators, etc. These cells must be placed in such a way they can be used multiple times by the design and are called pre-laced cells. The placement of these cells will be fixed and will be done before placing the logic. PnR tool will not optimize the placement of these cells.
 
 *** De-coupling Capacitor 
-De-coupling capacitor enusre the logic cells receives enough voltage so that the outputs lie wihtin the noise margins. There will be a potential drop across the wire due to resistance and capcitance because of with the logic cell may not receive the full scale voltage to function. If the voltage drop is below the noise margin then the cell will not turn on or turn off correctly. De-coupling capacitor is place closed to the cell so that this capacitor will compensate for the voltage drop. These capacitors must be place close to all the pre-placed cells to enure full scale voltage.
+De-coupling capacitor ensures the logic cells receive enough voltage so that the outputs lie within the noise margins. There will be a potential drop across the wire due to resistance and capacitance because the logic cell may not receive the full-scale voltage to function. If the voltage drop is below the noise margin then the cell will not turn on or turn off correctly. The de-coupling capacitor is placed close to the cell so that this capacitor will compensate for the voltage drop. These capacitors must be placed close to all the pre-placed cells to ensure full-scale voltage.
 
 #+attr_html: : width 600px
 [[./resources/openlane_resources/de_couple.png]]
@@ -270,9 +264,9 @@ De-coupling capacitor enusre the logic cells receives enough voltage so that the
 
 *** Power Planning
 
-De-coupling capacitor takes care of all the pre-placed cells but what about logic cells? It is not fessible to place de-coupling capacitors around all the logic cells. It is important to place the VDD and VSS in such a way the distance between the logic cells and the voltage souce is as minimum as possible. To achieve this the VDD and VSS metals are run throughout the chip with taps, the logic cells receive power from the closest source. 
+De-coupling capacitor takes care of all the pre-placed cells but what about logic cells? It is not feasible to place de-coupling capacitors around all the logic cells. It is important to place the VDD and VSS in such a way the distance between the logic cells and the voltage source is as minimal as possible. To achieve this the VDD and VSS metals are run throughout the chip with taps, and the logic cells receive power from the closest source. 
 
-Ground bounce and voltage droop occurs when a single voltage source is used for multiple logic cells. To aviod this multiple rails of VDD and VSS is used as shown in figure below.
+Ground bounce and voltage droop occur when a single voltage source is used for multiple logic cells. To avoid this multiple rails of VDD and VSS is used as shown in the figure below.
 
 
 #+attr_html: : width 600px
@@ -287,20 +281,20 @@ Ground bounce and voltage droop occurs when a single voltage source is used for 
 
 ** LAB 2: Run Floorplan
 
-set die are, core aspect ratio pwer distributionnetwrok macro placement
+set die is, core aspect ratio power distribution network macro placement
 
-1. You can run floorplan using the commnad "run_floorplan".
+1. You can run floorplan using the command "run_floorplan".
 4. Run floorplan with the command "run_floorplan".
-You can run floorplan using the commnad "
+You can run floorplan using the command "
 2. Go to "~/".
-4. Run floorplan with the command "run_floorplan".DYou can run floorplan using the commnad "~/Desktop/work/t".
-4. Run floorplan with the command "run_floorplan".oYou can run floorplan using the commnad "~/Desktop/work/tools/openlane_working_dir/openlane/configuration" to open the README.md file. This file consists of floorplan switches, below tables describes some of the switches for the user.
+4. Run floorplan with the command "run_floorplan".You can run floorplan using the command "~/Desktop/work/t".
+4. Run floorplan with the command "run_floorplan" You can run floorplan using the commnad "~/Desktop/work/tools/openlane_working_dir/openlane/configuration" to open the README.md file. This file consists of floorplan switches, below tables describe some of the switches for the user.
 
 - floorplan 
 | Variable          | Description                                                                                                                                                |
 |-------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `FP_CORE_UTIL`    | The core utilization percentage.<br>(Default:`50`percent)                                                                                                  |
-| `FP_ASPECT_RATIO` | The core's aspect ratio (height / width). <br> (Default: `1`)                                                                                              |
+| `FP_ASPECT_RATIO` | The core's aspect ratio (height/width). <br> (Default: `1`)                                                                                              |
 | `FP_SIZING`       | Whether to use relative sizing by making use of `FP_CORE_UTIL` or absolute one using `DIE_AREA`. <br> (Default: `"relative"` - accepts "absolute" as well) |
 | `DIE_AREA`        | Specific die area to be used in floorplanning. Specified as a 4-corner rectangle. Units in mm <br> (Default: unset)                                        |
 | `FP_IO_HMETAL`    | The metal layer on which to place the io pins horizontally (top and bottom of the die). <br>(Default: `4`)                                                 |
@@ -310,11 +304,11 @@ You can run floorplan using the commnad "
 | ...               | ....                                                                                                                                                       |
 | ...               | ....                                                                                                                                                       |
 
-3. The floorplan switches can be customized with the help of "~/Dekstop/work/tools/openlane_working_dir/openlane/configuration/floorplan.tcl" file. This will is will have some default parameters which can be changed. Apart from this file there are two other files where the configurations can be set i.e., "config.tcl" and "sky130A_sky130_fd_sc_hd_config.tcl" located at "~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a". The later file has the highest precedence over config.tcl and config.tcl has higher precedence over floorplan.tcl.
+3. The floorplan switches can be customized with the help of "~/Dekstop/work/tools/openlane_working_dir/openlane/configuration/floorplan.tcl" file. This will is will have some default parameters which can be changed. Apart from this file, there are two other files where the configurations can be set i.e., "config.tcl" and "sky130A_sky130_fd_sc_hd_config.tcl" located at "~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a". The latter file has the highest precedence over config.tcl and config.tcl has higher precedence over floorplan.tcl.
 
-NOTE: In the openlane flow the vertical and horizontal metal has one metal layer more than what is specified the in the configuration.
+NOTE: In the openlane flow the vertical and horizontal metal has one metal layer more than what is specified in the configuration.
 
-"sky130A_sky13_fd_sc_hd_config.tcl" is edited as follows as it has the highest precedence. In the file the aspect ratio is set 0.5 and the core utilization is set as 55%.
+"sky130A_sky13_fd_sc_hd_config.tcl" is edited as follows as it has the highest precedence. In the file the aspect ratio is set to 0.5 and the core utilization is set to 55%.
 #+begin_src tcl
 # SCL Configs
 set ::env(GLB_RT_ADJUSTMENT) 0.1
@@ -338,7 +332,7 @@ The updated floor_plan_config.tcl is shown below.
 [[./resources/openlane_resources/floor_plan_config.png]]
 
 
-Aspect ratio is the ratio of height to width. Looking at "picorv32.floorplan.def" shown below, shows the die area. The die are is reperesented in cartesian coordinate system, therefore the length is 389.440 micron units and width is 746.405 micron units. Hence, the aspect ratio is 389.440/746.405 = 0.5215 ~ 0.5 as we set in the tcl file.
+The aspect ratio is the ratio of height to width. Looking at "picorv32.floorplan.def" shown below shows the die area. The die is represented in a cartesian coordinate system, therefore the length is 389.440-micron units and the width is 746.405-micron units. Hence, the aspect ratio is 389.440/746.405 = 0.5215 ~ 0.5 as we set in the TCL file.
 
 
 #+attr_html: : width 600px
@@ -352,7 +346,7 @@ The die image is shown below.
 [[./resources/openlane_resources/die.png]]
 
 
-5. Open magic tool to see the floorplan. Go inside the folder "~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/{date_folder}/results/floorplan" and open terminal and execute the command "magic -T /home/${USER}/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def".
+5. Open the magic tool to see the floorplan. Go inside the folder "~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/{date_folder}/results/floorplan" and open terminal and execute the command "magic -T /home/${USER}/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def".
 
 
 #+attr_html: : width 600px
@@ -360,40 +354,40 @@ The die image is shown below.
 
 Even here it can be seen the aspect ratio is 0.5.
 
-6. The vertical and horizontal metal layer is set as 4 and 3 respectively. Let us ensure that the right metal is being used for horizantal and vertical metal.  
+6. The vertical and horizontal metal layer is set as 4 and 3 respectively. Let us ensure that the right metal is being used for horizontal and vertical metal.  
 
 
 
 ** Netlist binding with physical cells
 
-Each component in the netlist is represented a box with a width and height. These blocks are present in the library with all the information regarding timing and area, many more. Lets take an example of a netlist given in the figur below.
+Each component in the netlist is represented as a box with a width and height. These blocks are present in the library with all the information regarding timing and area, and many more. Let's take an example of a netlist given in the figure below.
 
 
 #+attr_html: : width 600px
 [[.//resources/openlane_resources/netlist1.png]]
 
 
-In reality, each cell is represented as a box and its information regarding delay and area is stored a library file. This library will consist of various version of the same cell based on area and time as both are inversely propotional to each other. Figure below shows an example of the various versions of the cells for the netlist, based on the constraint certain cell will be picked from the library file.
+In reality, each cell is represented as a box and its information regarding delay and area is stored in a library file. This library will consist of various versions of the same cell based on area and time as both are inversely proportional to each other. The figure below shows an example of the various versions of the cells for the netlist, based on the constraint certain cells will be picked from the library file.
 
 
 #+attr_html: : width 600px
 [[./resources/openlane_resources/netlist2.png]] 
 
 
-Using the cells in library the given netlist will be placed in the floorplan as shown in figure below.
+Using the cells in the library the given netlist will be placed on the floorplan as shown in the figure below.
 
 
 #+attr_html: : width 600px
 [[./resources/openlane_resources/placement3.png]] 
 
-It can be seen that the pre-paced cells are placed first and the logic is being placed in the remaining area. It is important to place the cells in such a way that the delay is least. Figure below shows the complete placement of the logic cells. Repeaters and buffers are added to endure there is no loss of data but adding them increasing area. Carefule consideration must be conducted in placing the cells.
+It can be seen that the pre-paced cells are placed first and the logic is placed in the remaining area. It is important to place the cells in such a way that the delay is the least. The figure below shows the complete placement of the logic cells. Repeaters and buffers are added to ensure there is no loss of data but adding them increases area. Careful consideration must be conducted in placing the cells.
 
 
 #+attr_html: : width 600px
 [[./resources/openlane_resources/placement4.png]]i
 
 
-Placement of the logic cells must be optmized to produce the least delay and area.
+The placement of the logic cells must be optimized to produce the least delay and area.
 
 
 #+attr_html: : width 600px
@@ -402,9 +396,8 @@ Placement of the logic cells must be optmized to produce the least delay and are
 
 ** LAB Cont..
 
-7. Congestion related placement. Excute "run_placement" to run placement, global placement occurs with this command.HPWL = Half paramenter wire length. reducition of HPWLis the main focus.
-
-8. Open magic tool to see the placement. Go inside the folder "~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/{date_folder}/results/placement" and open terminal and execute the command "magic -T /home/${USER}/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def".
+7. Congestion related placement. Execute "run_placement" to run placement, global placement occurs with this command.
+8. Open the magic tool to see the placement. Go inside the folder "~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/{date_folder}/results/placement" and open terminal and execute the command "magic -T /home/${USER}/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def".
 
 
 
@@ -421,36 +414,36 @@ Describe 8 different steps.
 
 GUNA software.
 
-Characterization desing flow include eight important  steps to analysis and modele an electrical component based on the standard cell library files.
+Characterization design flow includes eight important  steps to analyze and model an electrical component based on the standard cell library files.
 
-1. Technology library and setup environment: Technology library such 5nm, 7nm, 14nm etc is chosen for the fabrication process. Tools such as cadence, synsopsys or mentor graphics is decided to design environment. 
-2. Cell definition: standard cell are defined along with the perfomance metrics.
+1. Technology library and setup environment: Technology libraries such as 5nm, 7nm, 14nm, etc are chosen for the fabrication process. Tools such as cadence, Synopsys, or mentor graphics are used to design the environment. 
+2. Cell definition: standard cells are defined along with the performance metrics.
 3. Pre-characterization: SPICE models and the testbenches for cells are chosen.
-4. Simulation and data collection: the design is simulated for funcationlatiy and analysis such as DC, and Transient is applied to the design models.
+4. Simulation and data collection: the design is simulated for functionality and analysis such as DC, and Transient is applied to the design models.
 5. Data Analysis: timing parameters are extracted and power measurements are evaluated at various operation conditions.
 6. Library Generation: .lib and .lef files are generated.
-7. Validation and Verification: the design is tested against various tools and library to confirm the consistent funcationality.
-8. Optimization: optimzed for power, are and delay.
+7. Validation and Verification: the design is tested against various tools and libraries to confirm the consistent functionality.
+8. Optimization: Optimized for power, area, and delay.
 
 
 * VSD Day 3
 
 ** Changing design considerations on the fly.
 
-Reset the varible and run the design again. Use the command "$set {varible}". For example to change the pin alignment from equidistant to stacked use => "set ::env(FP_IO_MODE) 2" and run floorplan again or any runs that is desired.
+Reset the variable and run the design again. Use the command "$set {varible}". For example to change the pin alignment from equidistant to stacked use => "set ::env(FP_IO_MODE) 2" and run floorplan again or any runs that are desired.
 
 
 ** SPICE Simulations
 
-Need to create a spice deck to the simulation, in other words its a netlist for spice simulation.
+Need to create a spice deck to the simulation, in other words, its a netlist for spice simulation.
 
 *** SPICE Deck Creation
 
-- Component Conectivity: connection information of pmos and nmos, input and output, VDD and VSS. It is important define the connectivity of the subtrate as well.
-- Component Values: define width/length of mos components, input load capacitance and output load capacitance.
-- Identify node: a node is point where a component is connected to its both ends. One component will be presented between two nodes.
+- Component Connectivity: connection information of pmos and nmos, input and output, VDD and VSS. It is important to define the connectivity of the substrate as well.
+- Component Values: define the width/length of mos components, input load capacitance, and output load capacitance.
+- Identify node: a node is the point where a component is connected to both ends. One component will be presented between two nodes.
 
-Example of the spice deck model is shown in the figure below:
+An example of the spice deck model is shown in the figure below:
 
 
 #+attr_html: : width 600px
@@ -464,9 +457,9 @@ The blue dots are the nodes. The complete spice deck for the circuit along with 
 [[./resources/openlane_resources/spice_deck2.png]]
 
 
-** Spice extraction and post layout spice simulation for Inverter Cell
+** Spice extraction and post-layout spice simulation for Inverter Cell
 
-Download the necessary files for the lab, these file provide the inverter cell.
+Download the necessary files for the lab, these files provide the inverter cell.
 
 *** Download Files for CMOS Inverter for ngspice simulations
 
@@ -480,7 +473,7 @@ $cp ~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/lib.tech/magic/sky130
 
 *** Open the design
 
-From the desing location invoke magic by executing $magic -T sky130A.tech sky130_inv.mag &.
+From the design location invoke magic by executing $magic -T sky130A.tech sky130_inv.mag &.
 
 
 #+attr_html: : width 600px
@@ -488,7 +481,7 @@ From the desing location invoke magic by executing $magic -T sky130A.tech sky130
 
 ** Extract the spice model
 
-From the tkcon window, ensure you in the design location i.e., vsdcelldesign, perfom the following steps:
+From the tkcon window, ensure you are in the design location i.e., vsdcelldesign, perfom the following steps:
 
 1. Create an extraction file by using the command "extract all" for simulation in ngspice, "sky130_inv.ext" will be generated in the location of the design.
 2. From tkcon execute "ext2spice cthresh 0 rthresh 0" along with the parasitic capacitance.  
@@ -538,10 +531,10 @@ Edit the technology file for drc rules.
 *** Step 1: Extract the .lef file
 Guidelines for extractions:
 1. Ports should be on the intersection of the vertical and horizontal tracks.
-2. Width of the standard cell must be an odd mutliple of the horizontal track pitch.
-3. Height of the standard cell must be an even multiple of the vertical tracks.
+2. The width of the standard cell must be an odd multiple of the horizontal track pitch.
+3. The height of the standard cell must be an even multiple of the vertical tracks.
 
-Tracks infor can be found in "~Desktop/works/tools/openlane_working_dir/sky130A/libs.tech/openlane/sky130fd_fd_sc_hd/tracks.info". The tracks info is specificed below.
+Tracks info can be found in "~Desktop/works/tools/openlane_working_dir/sky130A/libs.tech/openlane/sky130fd_fd_sc_hd/tracks.info". The tracks info is specified below.
 
 #+begin_src 
 li1 X 0.23 0.46
@@ -568,12 +561,12 @@ Invoke magic from the "vsddesigncell" folder with the "magic -T sky130.tech sky1
 
 In the tkcon window:
 
-Save the design with a new name "save sky130_vsdinv.mag" . Open the newly saved design usign magic and extract the lef by using  "lef write". Copy the lef file to the source folder of the picorv32a. 
+Save the design with a new name "save sky130_vsdinv.mag". Open the newly saved design using magic and extract the lef by using  "lef write". Copy the lef file to the source folder of the picorv32a. 
 
 *** Step 2: Include the lef file in the openlane flow
 
-- Ensure the newly generate .lef file is present in the src folder of the pircorv32a.
-- Add the necessart changes to the config file to include the newly generated lef file and its libraries. The upadated config. file for the picorv32a should look like below:
+- Ensure the newly generated .lef file is present in the src folder of the pircorv32a.
+- Add the necessary changes to the config file to include the newly generated lef file and its libraries. The updated config. file for the picorv32a should look like below:
 
 #+begin_src 
 # Design
@@ -630,14 +623,14 @@ run_synthesis
 #+attr_html: : width 600px
 [[./resources/openlane_resources/syn_result1.png]]   
 
-- Adding the new design leads to timing violation the need to resolve.
+- Adding the new design leads to timing violations that need to be resolved.
 
 #+attr_html: : width 600px
 [[./resources/openlane_resources/vio1.png]]
 
 *** Timing Solution
 
-1. Change synthesis stratergy more favorable to timing that area using  "set ::env(SYNTH_STRATERGY) "DELAY 3" "
+1. Change synthesis strategy more favorable to timing that area using  "set ::env(SYNTH_STRATERGY) "DELAY 3" "
 2. Change fan outs by using "set ::env(SYNTH_BUFFERING) 1". TO check whether it is on or not by using echo
 2. Change sizing by using "set ::env(SYNTH_SIZING) 1"
 4. Change the driving cell by using "set ::env(SYNTH_DRIVING_CELL)" 
@@ -645,7 +638,7 @@ run_synthesis
 Use the following commands to improve timing:
 
 #+begin_src 
-# overwrite the same design usign the following command
+# overwrite the same design using the following command
 prep -design picorv32a -tag <folder_name> -overwrite
 
 set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
@@ -661,7 +654,7 @@ run_synthesis
 
 #+end_src
 
-The improved timing is shown below but becuase of the configuration set the area is increased.
+The improved timing is shown below but because of the configuration set the area is increased.
 
 
 [[./resources/openlane_resources/vio2.png]]
@@ -670,7 +663,7 @@ The improved timing is shown below but becuase of the configuration set the area
 [[./resources/openlane_resources/area1.png]]
 
 
-- To run floor plan run the following commands,
+- To run the floor plan run the following commands,
 
 #+begin_src 
 init_floorplan
@@ -748,12 +741,10 @@ set all_inputs_wo_clk [lreplace [all_inputs] $clk_indx $clk_indx]
 #set all_inputs_wo_clk_rst [lreplace $all_inputs_wo_clk $rst_indx $rst_indx]
 set all_inputs_wo_clk_rst $all_inputs_wo_clk
 
-# correct resetn
 set_input_delay $input_delay_value  -clock [get_clocks $::env(CLOCK_PORT)] $all_inputs_wo_clk_rst
 #set_input_delay 0.0 -clock [get_clocks $::env(CLOCK_PORT)] {resetn}
 set_output_delay $output_delay_value  -clock [get_clocks $::env(CLOCK_PORT)] [all_outputs]
 
-# TODO set this as parameter
 set_driving_cell -lib_cell $::env(SYNTH_DRIVING_CELL) -pin $::env(SYNTH_DRIVING_CELL_PIN) [all_inputs]
 set cap_load [expr $::env(SYNTH_CAP_LOAD) / 1000.0]
 puts "\[INFO\]: Setting load to: $cap_load"
@@ -772,9 +763,9 @@ The base config file is found in the location "~/Desktop/work/tools/openlane_wor
  
 *** Optimize the design for positive slack
 
-1. Analyze the setup time, look for the maximun cell delay and try to optimize the design.
+1. Analyze the setup time, look for the maximum cell delay, and try to optimize the design.
 
-Note: Delay of a cell is a function of input slew and the output load. Delay of the cell increases with the input slew and the delay of the cell increases with the output load ie., more the input slew, more is the delay and more the output capacitance more is the delay.
+Note: The delay of a cell is a function of the input slew and the output load. The delay of the cell increases with the input slew and the delay of the cell increases with the output load ie., the more the input slew, the more the delay, and the more the output capacitance is the delay.
 
 - The setup time report is shown below:
 
@@ -930,7 +921,7 @@ Fanout     Cap    Slew   Delay    Time   Description
 
 
 
-- From the report the first parameter to optimize is for fanout. Choose the fan to be no more than 4. To set the fanout during use "set ::env(SYNTH_MAX_FANOUT) 4" in the config file for convenience and synthesis. You can the negative slack is reduced.
+- From the report, the first parameter to optimize is for fanout. Choose the fan to be no more than 4. To set the fanout during use "set ::env(SYNTH_MAX_FANOUT) 4" in the config file for convenience and synthesis. You can see that the negative slack is reduced.
 
 #+begin_src 
 Startpoint: _35312_ (rising edge-triggered flip-flop clocked by clk)
@@ -1445,17 +1436,17 @@ Fanout       Cap      Slew     Delay      Time   Description
 #+end_src
 
 
-- This is an iterative process where you find and optimize the path. One way is to increase the clock frequency to resolve timing violation, usually it not preferred because clock frequency will be on of the constraints. For now we can just increase the clock to resolve the issue. Changing clock from 12 to 24.73 results in the positive slack.
+- This is an iterative process where you find and optimize the path. One way is to increase the clock frequency to resolve timing violations, usually it is not preferred because clock frequency will be on of the constraints. For now, we can just increase the clock to resolve the issue. Changing the clock from 12 to 24.73 results in a positive slack.
 
 
 [[./resources/openlane_resources/delay3.png]]
 
-2. Run clock tree synthesis by using the command "run_cts" this will add buffers to the clock tree to minimize the skew.
+2. Run clock tree synthesis by using the command "run_cts". This will add buffers to the clock tree to minimize the skew.
 
 
 ** Post-CTS Timing analysis
 
-- Run the following commands from after running cts from the terminal:
+- Run the following commands after running cts from the terminal:
 
 #+begin_src 
 openroad
@@ -1571,7 +1562,7 @@ Fanout     Cap    Slew   Delay    Time   Description
 
 *** Post CTS timing analysis after removing "clk_buf_1"
 
-- Follow the commands to excute the desing:
+- Follow the commands to execute the design:
 
 #+begin_src
 echo $::env(CTS_CLK_BUFFER_LIST)
@@ -1611,7 +1602,7 @@ set_propagated_clock [all_clocks]
 report_checks -path_delay min_max -fields {slew trans net cap input_pins} -format full_clock_expanded -digits 4
 #+end_src
 
-Results are as follows:
+The results are as follows:
 
 
 [[./resources/openlane_resources/buff_list2.png]]
@@ -1810,7 +1801,7 @@ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs
 
 ** Detailed Routing
 
-1. Use the command "run_routing" to perform detailed routing. Used routing stratergy 0 so that it completes soon. The images shown below is the result of the routing.
+1. Use the command "run_routing" to perform detailed routing. Used routing strategy 0 so that it completes soon. The images shown below are the result of the routing.
 
 [[./resources/openlane_resources/rout1.png]]
 
