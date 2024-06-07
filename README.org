@@ -1818,6 +1818,6 @@ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs
 
 * Acknowledgements
 
-- [Kunal Ghosh](https://in.linkedin.com/in/kunal-ghosh-vlsisystemdesign-com-28084836), Co-founder, VSD Corp. Pvt. Ltd.
-- [Nickson P Jose](https://github.com/nickson-jose/), Physical Design Engineer, Intel Corp.
-- [Fayiz Ferosh](https://github.com/fayizferosh).
+- [[Kunal Ghosh](https://in.linkedin.com/in/kunal-ghosh-vlsisystemdesign-com-28084836)], Co-founder, VSD Corp. Pvt. Ltd.
+- [[Nickson P Jose](https://github.com/nickson-jose/)], Physical Design Engineer, Intel Corp.
+- [[Fayiz Ferosh](https://github.com/fayizferosh)].
